@@ -1,9 +1,16 @@
-from .common import generate_solved_puzzle, directions, move_grid
-from .node import Node
+from algorithms.common import generate_solved_puzzle, directions, move_grid
+from algorithms.node import Node
 
 
 def count_manhattan_h(grid):
-    pass
+    h_count = 0
+    solved_puzzle = generate_solved_puzzle(len(grid))
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            if not grid[i][j] is solved_puzzle[i][j] and grid[i][j] and solved_puzzle[i][j]:
+                h_count += 1
+
+    return h_count
 
 
 def get_best_child(parent_node):
@@ -25,7 +32,7 @@ def get_best_child(parent_node):
 def manhattan_district(parent_node, full_path):
     full_path.append(parent_node)
     best_child = get_best_child(parent_node)
-    if not best_child.grid is generate_solved_puzzle(len(best_child.grid), len(best_child.grid)):
+    if not best_child.grid is generate_solved_puzzle(len(best_child.grid)):
         return manhattan_district(best_child, full_path)
     else:
         return full_path
