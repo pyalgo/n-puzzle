@@ -8,7 +8,7 @@ def count_manhattan_h(grid):
 
 def get_best_child(parent_node):
     parent_grid = parent_node.grid
-    best_child = parent_node
+    best_child = None
     for d in directions:
         new_child = Node(grid=move_grid(parent_grid, d))
         new_child.G = parent_node.G + 1
