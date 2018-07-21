@@ -1,10 +1,16 @@
+def print_matrix(res):
+    for r in res:
+        print(r)
+    print()
+
+
 def generate_solved_puzzle(matrix_size):
     m = matrix_size
     n = matrix_size
     k = 0
     l = 0
     val = 0
-    all_numbers = [i for i in range(1, m*n)]
+    all_numbers = [i for i in range(1, m * n)]
     all_numbers.append(0)
     res = [[0 for _ in range(m)] for _ in range(m)]
 
@@ -42,20 +48,43 @@ def generate_solved_puzzle(matrix_size):
             l += 1
     return res
 
+def generate_solved_puzzle_test(matrix_size):
+    all_numbers = [i for i in range(1, matrix_size * matrix_size)]
+    all_numbers.append(0)
+    res = [[0 for _ in range(matrix_size)] for _ in range(matrix_size)]
+    for i in range(matrix_size):
+        res[i] = all_numbers[matrix_size*i:matrix_size*(i+1)]
+    return res
+
+def mover_row(row, direction):
+    index_of_element = row.index(0)
+    if any(d == direction for d in [UP, LEFT]):
+        if index_of_element > 0:
+            row.remove(0)
+            row.insert(index_of_element-1, 0)
+    elif any(d == direction for d in [DOWN, RIGHT]):
+        if index_of_element < len(row):
+            row.remove(0)
+            row.insert(index_of_element+1, 0)
+    return row
+
+
 def move_grid(grid, direction):
     """
     moves grid according to the direction
     """
     for i in range(len(grid)):
-        for j in  range(len(grid)):
+        for j in range(len(grid)):
             if not grid[i][j]:
-                if direction == LEFT:
-                    pass
+                if any(d == direction for d in [UP, DOWN]):
+                    row = [grid[t][j] for t in range(len(grid))]
+                    new_row = mover_row(row, direction)
+                    for t in range(len(grid)):
+                        grid[t][j] = new_row[t]
+                elif any(d == direction for d in [LEFT, RIGHT]):
+                    grid[i][:] = mover_row(grid[i][:], direction)
+                return grid
 
-
-
-
-    pass
 
 LEFT = 'l'
 RIGHT = 'r'

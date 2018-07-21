@@ -8,3 +8,4 @@ class Node:
         self.G = None
         self.F = None
 
+    # def __repr__(self):
