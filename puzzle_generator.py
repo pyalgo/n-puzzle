@@ -97,7 +97,7 @@ if __name__ == "__main__":
 
     w = len(str(s * s))
     print("#This puzzle is %s" % ("solvable" if solv else "unsolvable"))
-    print("#%d" % s)
+    print("%d" % s)
 
     for i in range(s):
         for j in range(s):

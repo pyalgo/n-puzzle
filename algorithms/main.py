@@ -6,7 +6,8 @@ import sys
 from .process_input import (remove_comments,
                             parse_input_list,
                             get_size,
-                            validate_matrix)
+                            validate_matrix,
+                            check_if_solvable)
 
 APP_NAME = 'n-puzzle'
 
@@ -28,9 +29,10 @@ if __name__ == '__main__':
     matrix = parse_input_list(input_list)
     size = get_size(matrix.pop(0))
     validate_matrix(matrix, size)
+    check_if_solvable(matrix, size)
     # matrix = [[8,7,5],
     #           [3,0,1],
     #           [4,2,6]]
-    # res = generate_solved_puzzle(5)
-    # for r in res:
-    #     print(r)
+    res = generate_solved_puzzle(5)
+    for r in res:
+        print(r)

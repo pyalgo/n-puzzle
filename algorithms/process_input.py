@@ -60,17 +60,63 @@ def validate_matrix(matrix, size):
     _validate_numbers(matrix, size)
 
 
+def _get_inversions_count(tiles, size):
+    count = 0
+    for i in range(size ** 2 - 1):
+        for j in range(i, size ** 2):
+            if tiles[i] and tiles[j] and tiles[i] > tiles[j]:
+                count += 1
+    return count
+
+
+def _solvable_if_odd(inversions):
+    if inversions % 2 == 0:
+        print('The puzzle is solvable')
+    else:
+        print('The puzzle is not solvable. exiting')
+        sys.exit(0)
+
+
+def _get_blank_row(matrix, size):
+    for i, row in reversed(list(enumerate(matrix))):
+        if 0 in row:
+            return size - i
+
+
+def _solvable_if_even(size, inversions, matrix):
+    blank_row = _get_blank_row(matrix, size)
+    if blank_row % 2 == 0 and inversions % 2 != 0:
+        print('The puzzle is solvable')
+    elif blank_row % 2 != 0 and inversions % 2 == 0:
+        print('The puzzle is solvable')
+    else:
+        print('The puzzle is not solvable. exiting')
+        sys.exit(0)
+
+
+def check_if_solvable(matrix, size):
+    tiles = []
+    for row in matrix:
+        tiles.extend(row)
+    inversions = _get_inversions_count(tiles, size)
+    if size % 2 == 0:
+        _solvable_if_even(size, inversions, matrix)
+    else:
+        _solvable_if_odd(inversions)
+
+
 if __name__ == '__main__':
-    s = '''#This puzzle is solvable
-    3
-    4 8 1 #fuck
-    #sdfsd
-    7 3 6
-    5 2 0
+    s = '''#This puzzle is unsolvable
+    4
+    9 15 13 1 
+    2 12 11 5 
+    14 4 10 0 
+    3 6 7 8 
     '''
     input_list = remove_comments(s)
     matrix = parse_input_list(input_list)
     size = get_size(matrix.pop(0))
     validate_matrix(matrix, size)
-    for line in matrix:
-        print(line)
+    check_if_solvable(matrix, size)
+    # for line in matrix:
+    #     print(line)
