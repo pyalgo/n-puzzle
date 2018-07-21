@@ -35,4 +35,5 @@ def manhattan_district(parent_node, full_path):
     if not best_child.grid is generate_solved_puzzle(len(best_child.grid)):
         return manhattan_district(best_child, full_path)
     else:
+        full_path.append(best_child)
         return full_path

@@ -46,6 +46,20 @@ def move_grid(grid, direction):
     """
     moves grid according to the direction
     """
+    for i in range(len(grid)):
+        for j in  range(len(grid)):
+            if not grid[i][j]:
+                if direction == LEFT:
+                    pass
+
+
+
+
     pass
 
-directions = ['r', 'l', 'd', 'u']
+LEFT = 'l'
+RIGHT = 'r'
+DOWN = 'd'
+UP = 'u'
+
+directions = [LEFT, RIGHT, DOWN, UP]
