@@ -37,6 +37,9 @@ class Node:
         s += f'F={self.F}\n'
         return s
 
+    def __eq__(self, other):
+        return self.grid == other.grid
+
     @property
     def is_solved(self):
         return True if self.grid == self.solved_puzzle else False
@@ -81,41 +84,36 @@ class Node:
         return children
 
 
-def recursive_solve(current_node):
-    if current_node.is_solved:
-        print('Solution Found!')
-        print(current_node)
-        sys.exit(0)
-    solutions = current_node.get_all_children()
-    current_solution = reduce(lambda x, y: x if x.F < y.F else y, solutions)
-    recursive_solve(current_solution)
-
-
-def solve(current_node):
-    graph = {
-        current_node: []
-    }
-    open_list = [current_node, ]
+def solve(current_node, verbose=False):
+    open_list = []
     closed_list = []
-    while open_list:
-        current_node = open_list.pop(0)
+    i = 0
+    while True:
+        i += 1
         closed_list.append(current_node)
-        print(current_node)
         if current_node.is_solved:
             print('Solution Found!')
             print(current_node)
             sys.exit(0)
+        if verbose:
+            print(current_node)
         solutions = current_node.get_all_children()
-        best_candidate = reduce(lambda x, y: x if x.F < y.F else y, solutions)
-        open_list.extend(solutions)
-    print('No solution exists for the puzzle')
-    sys.exit(0)
+        clean_solutions = list(filter(lambda x: x not in closed_list, solutions))
+        open_list.extend(clean_solutions)
+        current_node = reduce(lambda x, y: x if x.F < y.F else y,
+                              open_list)
+        open_list.remove(current_node)
 
 
 if __name__ == '__main__':
     matrix = [[1, 2, 0],
               [7, 8, 3],
               [6, 5, 4]]
+
+    matrix = [[0, 6, 5],
+              [7, 3, 1],
+              [2, 4, 8]]
+
     n = 3
     solved = generate_solved_puzzle(3)
     node = Node(None, matrix, n, 0, solved, manhattan)
