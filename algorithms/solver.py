@@ -92,19 +92,29 @@ def recursive_solve(current_node):
 
 
 def solve(current_node):
-    while True:
+    graph = {
+        current_node: []
+    }
+    open_list = [current_node, ]
+    closed_list = []
+    while open_list:
+        current_node = open_list.pop(0)
+        closed_list.append(current_node)
         print(current_node)
         if current_node.is_solved:
             print('Solution Found!')
             print(current_node)
             sys.exit(0)
         solutions = current_node.get_all_children()
-        current_node = reduce(lambda x, y: x if x.F < y.F else y, solutions)
+        best_candidate = reduce(lambda x, y: x if x.F < y.F else y, solutions)
+        open_list.extend(solutions)
+    print('No solution exists for the puzzle')
+    sys.exit(0)
 
 
 if __name__ == '__main__':
-    matrix = [[1, 2, 3],
-              [7, 8, 0],
+    matrix = [[1, 2, 0],
+              [7, 8, 3],
               [6, 5, 4]]
     n = 3
     solved = generate_solved_puzzle(3)
