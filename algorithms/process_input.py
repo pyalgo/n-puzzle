@@ -70,7 +70,7 @@ def _get_inversions_count(tiles, size):
 
 
 def _solvable_if_odd(inversions):
-    if inversions % 2 == 0:
+    if inversions % 2 != 0:
         print('The puzzle is solvable')
     else:
         print('The puzzle is not solvable. exiting')
