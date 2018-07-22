@@ -10,6 +10,9 @@ from .process_input import (remove_comments,
                             get_size,
                             validate_matrix,
                             check_if_solvable)
+from .solver import (Node, recursive_solve)
+
+# sys.setrecursionlimit(100000)
 
 
 if __name__ == '__main__':
@@ -31,21 +34,33 @@ if __name__ == '__main__':
     validate_matrix(matrix, size)
     check_if_solvable(matrix, size)
 
-    matrix = [[1, 8, 5],
-              [6, 0, 2],
-              [7, 4, 3]]
-    print_matrix(matrix)
+    solved = generate_solved_puzzle(3)
+    node = Node(matrix, size, 0, solved)
+    node.evaluate()
+    recursive_solve(node)
+
+    # matrix = [[1, 2, 3],
+    #           [0, 8, 4],
+    #           [7, 6, 5]]
+    # node = Node(matrix)
+    #
+    # graph = {
+    #     node: None
+    # }
+    #
+    # print(node)
+    # print_matrix(matrix)
     # while True:
     #     dir = input()
     #     if any(d == dir for d in directions):
     #         matrix = move_grid(matrix, dir)
     #         print_matrix(matrix)
 
-    first_node = Node(grid=matrix)
-    first_node.G = 0
-    first_node.H = count_manhattan_h(matrix)
-    first_node.F = first_node.H + first_node.G
-    full_path = manhattan_district(first_node, [])
-    last_node = full_path[len(full_path) - 1]
+    # first_node = Node(grid=matrix)
+    # first_node.G = 0
+    # first_node.H = count_manhattan_h(matrix)
+    # first_node.F = first_node.H + first_node.G
+    # full_path = manhattan_district(first_node, [])
+    # last_node = full_path[len(full_path) - 1]
     # print_matrix(last_node.grid)
 
