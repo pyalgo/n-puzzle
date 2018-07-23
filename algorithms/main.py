@@ -8,7 +8,9 @@ from .process_input import (remove_comments,
                             get_size,
                             validate_matrix,
                             check_if_solvable)
-from .solver import (Node, solve, manhattan)
+from .solver import solve
+from .node import Node
+from .heuristics import manhattan
 
 
 if __name__ == '__main__':

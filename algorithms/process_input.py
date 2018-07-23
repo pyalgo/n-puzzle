@@ -103,20 +103,3 @@ def check_if_solvable(matrix, size):
         _solvable_if_even(size, inversions, matrix)
     else:
         _solvable_if_odd(inversions)
-
-
-if __name__ == '__main__':
-    s = '''#This puzzle is unsolvable
-    4
-    9 15 13 1 
-    2 12 11 5 
-    14 4 10 0 
-    3 6 7 8 
-    '''
-    input_list = remove_comments(s)
-    matrix = parse_input_list(input_list)
-    size = get_size(matrix.pop(0))
-    validate_matrix(matrix, size)
-    check_if_solvable(matrix, size)
-    # for line in matrix:
-    #     print(line)
