@@ -10,10 +10,10 @@ from .process_input import (remove_comments,
                             check_if_solvable)
 from .solver import solve
 from .node import Node
-from .heuristics import manhattan
+from .heuristics import manhattan, misplaced, linear_conflict_manhattan
 
 
-if __name__ == '__main__':
+if __name__ == '__main__' and __package__:
     parser = ArgumentParser()
     parser.add_argument('file_path', help='path to the input file')
     parser.add_argument('-f', default='manhattan',
@@ -35,7 +35,9 @@ if __name__ == '__main__':
     check_if_solvable(matrix, size)
 
     heuristics = {
-        'manhattan': manhattan
+        'misplaced': misplaced,
+        'manhattan': manhattan,
+        'linear_conflict_manhattan': linear_conflict_manhattan
     }
 
     solved = generate_solved_puzzle(size,)
