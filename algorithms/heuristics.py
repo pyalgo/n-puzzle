@@ -41,11 +41,11 @@ def _linear_conflict(solved_puzzle, unsolved_puzzle):
                                 )
                         ):
                     conflicts.append((i, j))
-    return len(conflicts)
+    return conflicts
 
 
 def linear_conflict_manhattan(grid, n, solved_puzzle):
-    horizontal_conflicts = _linear_conflict(grid, solved_puzzle)
+    horizontal_conflicts = len(_linear_conflict(grid, solved_puzzle))
 
     vertical_resolved_puzzle = [[] for _ in range(n)]
     vertical_unsolved_puzzle = [[] for _ in range(n)]
@@ -54,7 +54,7 @@ def linear_conflict_manhattan(grid, n, solved_puzzle):
             vertical_resolved_puzzle[j].append(solved_puzzle[i][j])
             vertical_unsolved_puzzle[j].append(grid[i][j])
 
-    vertical_conflicts = _linear_conflict(vertical_unsolved_puzzle, vertical_resolved_puzzle)
+    vertical_conflicts = len(_linear_conflict(vertical_unsolved_puzzle, vertical_resolved_puzzle))
 
     manhattan_h = manhattan(grid, n, solved_puzzle)
 
@@ -62,6 +62,36 @@ def linear_conflict_manhattan(grid, n, solved_puzzle):
 
     return manhattan_h + linear_conflict_h
 
+
+def _corner_conflict(grid, n, solved_puzzle):
+    conflicts = []
+
+    for i in range(n):
+        for j in range(n):
+            if i == 0 and j == 0:
+                if grid[i][j] != solved_puzzle[i][j] \
+                        and grid[i][j+1] == solved_puzzle[i][j+1] \
+                        and grid[i+1][j] == solved_puzzle[i+1][j]:
+                    conflicts.append((grid[i][j+1], grid[i+1][j]))
+            elif i == 0 and j == n - 1:
+                if grid[i][j] != solved_puzzle[i][j] \
+                        and grid[i][j - 1] == solved_puzzle[i][j - 1] \
+                        and grid[i + 1][j] == solved_puzzle[i + 1][j]:
+                    conflicts.append((grid[i][j - 1], grid[i + 1][j]))
+            elif i == n-1 and j == n-1:
+                if grid[i][j] != solved_puzzle[i][j] \
+                        and grid[i][j - 1] == solved_puzzle[i][j - 1] \
+                        and grid[i - 1][j] == solved_puzzle[i - 1][j]:
+                    conflicts.append((grid[i][j - 1], grid[i - 1][j]))
+            elif i == n-1 and j == 0:
+                if grid[i][j] != solved_puzzle[i][j] \
+                        and grid[i][j + 1] == solved_puzzle[i][j + 1] \
+                        and grid[i - 1][j] == solved_puzzle[i - 1][j]:
+                    conflicts.append((grid[i][j + 1], grid[i - 1][j]))
+
+
+def linear_corner_conflict_manhattan(grid, n, solved_puzzle):
+    pass
 
 def manhattan(grid, n, solved_puzzle):
     solved = {}
