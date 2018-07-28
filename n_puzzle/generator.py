@@ -77,6 +77,3 @@ def generate_puzzle(s=3, solvable=True, iterations=100):
     print(p.strip())
     check_if_solvable(res, size=s)
     return p.strip()
-
-
-print(generate_puzzle())

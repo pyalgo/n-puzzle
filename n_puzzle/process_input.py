@@ -2,7 +2,7 @@ from io import StringIO
 import re
 import sys
 
-APP_NAME = 'n_puzzle'
+APP_NAME = 'n-puzzle'
 
 
 def remove_comments(raw_input):

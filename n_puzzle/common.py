@@ -1,8 +1,7 @@
-def print_matrix(grid):
-    s = ''
-    for row in grid:
-        s += str(row) + '\n'
-    print(s)
+def print_matrix(res):
+    for r in res:
+        print(r)
+    print()
 
 
 def generate_solved_puzzle(matrix_size):
