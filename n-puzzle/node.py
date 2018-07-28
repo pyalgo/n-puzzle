@@ -21,9 +21,6 @@ class Node:
         s = ''
         for row in self.grid:
             s += str(row) + '\n'
-        # s += f'G={self.G}\n'
-        # s += f'H={self.H}\n'
-        # s += f'F={self.F}\n'
         return s
 
     def __eq__(self, other):

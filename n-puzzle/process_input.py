@@ -35,6 +35,9 @@ def get_size(size_row):
     except (IndexError, ValueError) as e:
         print(f'{APP_NAME}: error: invalid puzzle size format')
         sys.exit(1)
+    if size < 2:
+        print(f'{APP_NAME}: error: puzzle size should be >= 2')
+        sys.exit(1)
     return size
 
 
