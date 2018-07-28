@@ -1,4 +1,4 @@
-package = n-puzzle
+package = n_puzzle
 
 
 install_user:
@@ -11,7 +11,7 @@ install:
 	pip3 install .
 
 uninstall:
-	pip3 uninstall n-puzzle -y
+	pip3 uninstall n_puzzle -y
 
 make clean:
 	rm -rf `find . -name __pycache__`

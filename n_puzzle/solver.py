@@ -1,10 +1,11 @@
 import sys
 from .node import Node
 import heapq
+from time import time
 
 
 def print_report(node: Node, show_solution, complex_in_time,
-                 complex_in_size):
+                 complex_in_size, start_time):
     deepness = 0
     solution_sequence = []
     current_node = node
@@ -21,9 +22,10 @@ def print_report(node: Node, show_solution, complex_in_time,
     print(f'Complexity in time: {complex_in_time}')
     print(f'Complexity in size: {complex_in_size}')
     print(f'Number of moves to solution: {deepness}')
+    print(f'Execution time: {round(time() - start_time, 3)} ms')
 
 
-def solve(current_node, verbose=False, solution_sequence=False):
+def solve(current_node, start_time, verbose=False, solution_sequence=False):
     open_set = []
     heapq.heappush(open_set, (current_node.F, current_node))
     closed_set = {}
@@ -35,7 +37,7 @@ def solve(current_node, verbose=False, solution_sequence=False):
         closed_set[(str(current_node.grid))] = None
         if current_node.is_solved:
             print_report(current_node, solution_sequence, complex_in_time,
-                         complex_in_size)
+                         complex_in_size, start_time)
             sys.exit(0)
         if verbose:
             print(current_node)
