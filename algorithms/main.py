@@ -10,8 +10,7 @@ from .process_input import (remove_comments,
                             check_if_solvable)
 from .solver import solve
 from .node import Node
-from .heuristics import manhattan, misplaced, linear_conflict_manhattan
-
+from .heuristics import manhattan, linear_conflict_manhattan, linear_corner_conflict_manhattan, linear_corner_conflict_misplaced_manhattan
 
 if __name__ == '__main__' and __package__:
     parser = ArgumentParser()
@@ -35,12 +34,18 @@ if __name__ == '__main__' and __package__:
     check_if_solvable(matrix, size)
 
     heuristics = {
-        'misplaced': misplaced,
-        'manhattan': manhattan,
-        'linear_conflict_manhattan': linear_conflict_manhattan
+        'mnh': manhattan,
+        'lmnh': linear_conflict_manhattan,
+        'lcmnh': linear_corner_conflict_manhattan,
+        'lcmmnh': linear_corner_conflict_misplaced_manhattan
     }
 
     solved = generate_solved_puzzle(size,)
     node = Node(None, matrix, size, 0, solved, heuristic=heuristics[args.f])
+    import time
+
+    start = time.time()
     node.evaluate()
     solve(node, verbose=args.v)
+    end = time.time()
+    print(end - start)

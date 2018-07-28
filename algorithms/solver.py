@@ -12,7 +12,8 @@ def solve(current_node, verbose=False):
         if current_node.is_solved:
             print('Solution Found!')
             print(current_node)
-            sys.exit(0)
+            return
+            # sys.exit(0)
         if verbose:
             print(current_node)
         solutions = current_node.get_all_children()
