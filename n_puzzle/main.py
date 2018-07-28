@@ -22,8 +22,7 @@ from .common import print_matrix
 
 def main():
     start_time = time()
-    parser = ArgumentParser(description='test',
-                            formatter_class=RawTextHelpFormatter)
+    parser = ArgumentParser(formatter_class=RawTextHelpFormatter)
     heuristics_help = """Possible heuristics functions:
 
     'mnh': Manhattan distance heuristic,
@@ -53,8 +52,8 @@ def main():
         try:
             with open(args.f, 'r') as f:
                 raw_input = f.read()
-        except FileNotFoundError as e:
-            print('n_puzzle: ' + str(e))
+        except (FileNotFoundError, IsADirectoryError) as e:
+            print('n_puzzle: Input error: ' + str(e))
             sys.exit(1)
     else:
         if args.s is None:

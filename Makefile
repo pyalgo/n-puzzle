@@ -4,9 +4,6 @@ package = n_puzzle
 install_user:
 	pip3 install --user .
 
-install_dev:
-	pip3 install --editable .
-
 install:
 	pip3 install .
 
