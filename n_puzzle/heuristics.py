@@ -15,7 +15,7 @@ def _linear_conflict(solved_puzzle, unsolved_puzzle):
             for j in unsolved_row:
                 if j in solved_row and i in solved_row and \
                         (
-                                    (
+                                (
                                                 solved_row.index(i) != unsolved_row.index(i) and
                                                 (
                                                             (unsolved_row.index(i) < unsolved_row.index(j) and

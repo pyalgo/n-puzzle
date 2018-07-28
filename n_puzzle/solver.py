@@ -1,45 +1,49 @@
 import sys
-from functools import reduce
 from .node import Node
+import heapq
 
 
-def print_report(node: Node, complexity_in_time):
+def print_report(node: Node, show_solution, complex_in_time,
+                 complex_in_size):
     deepness = 0
     solution_sequence = []
-    while node is not None:
-        solution_sequence.append(node)
+    current_node = node
+    while current_node is not None:
+        solution_sequence.append(current_node)
         deepness += 1
-        node = node.parent
-    print('The ordered sequence of states that make up the solution')
-    print(f'Total number of states ever selected in the "opened" set'
-          f' (complexity in time): {complexity_in_time}')
-    print(f'Minimum number of moves required to reach the solution:'
-          f' {deepness}')
+        current_node = current_node.parent
+    if show_solution:
+        print('Moves that make up a solution:')
+        for item in reversed(solution_sequence):
+            print(item)
+    print('Solution is:')
+    print(node)
+    print(f'Complexity in time: {complex_in_time}')
+    print(f'Complexity in size: {complex_in_size}')
+    print(f'Number of moves to solution: {deepness}')
 
 
-def solve(current_node, verbose=False):
-    open_list = [current_node, ]
-    closed_list = []
-    complexity_in_time = 0
-    complexity_in_size = 0
-    i = 0
-    while open_list:
-        complexity_in_time += 1
-        open_list.remove(current_node)
-        closed_list.append(current_node)
+def solve(current_node, verbose=False, solution_sequence=False):
+    open_set = []
+    heapq.heappush(open_set, (current_node.F, current_node))
+    closed_set = {}
+    complex_in_time = 0
+    complex_in_size = 0
+    while open_set:
+        current_node = heapq.heappop(open_set)[1]
+        complex_in_time += 1
+        closed_set[(str(current_node.grid))] = None
         if current_node.is_solved:
-            print('Solution Found!')
-            print_report(current_node, complexity_in_time)
-            print(current_node)
-            return
-            # sys.exit(0)
+            print_report(current_node, solution_sequence, complex_in_time,
+                         complex_in_size)
+            sys.exit(0)
         if verbose:
             print(current_node)
         solutions = current_node.get_all_children()
-        clean_solutions = list(filter(lambda x: x not in closed_list,
+        clean_solutions = list(filter(lambda x: str(x.grid) not in closed_set,
                                       solutions))
-        open_list.extend(clean_solutions)
-        current_node = reduce(lambda x, y: x if x.F < y.F else y,
-                              open_list)
+        complex_in_size += len(clean_solutions)
+        for candidate in clean_solutions:
+            heapq.heappush(open_set, (candidate.F, candidate))
     print('Solution does not exist')
     sys.exit(0)

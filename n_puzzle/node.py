@@ -21,13 +21,10 @@ class Node:
         s = ''
         for row in self.grid:
             s += str(row) + '\n'
-        # s += f'G={self.G}\n'
-        # s += f'H={self.H}\n'
-        # s += f'F={self.F}\n'
-        return s.strip()
+        return s
 
     def __eq__(self, other):
-        return self.grid == other.grid
+        return self.F == other.F
 
     @property
     def is_solved(self):
